@@ -2,7 +2,6 @@ import React from "react";
 import memesData from "../memesData";
 
 export default function Meme() {
-  
   const [meme, setMeme] = React.useState({
     topText: "",
     bottomText: "",
@@ -20,6 +19,14 @@ export default function Meme() {
     }));
   }
 
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setMeme((prevMeme) => ({
+      ...prevMeme,
+      [name]: value,
+    }));
+  }
+
   return (
     <main>
       <div className="form">
@@ -29,6 +36,9 @@ export default function Meme() {
             type="text"
             placeholder="Shut up"
             className="form--input"
+            name="topText"
+            value={meme.topText}
+            onChange={handleChange}
           ></input>
         </label>
 
@@ -38,6 +48,9 @@ export default function Meme() {
             type="text"
             placeholder="and take my money"
             className="form--input"
+            name="bottomText"
+            value={meme.bottomText}
+            onChange={handleChange}
           ></input>
         </label>
 
@@ -46,7 +59,11 @@ export default function Meme() {
         </button>
       </div>
 
-      <img src={meme.randomImage} className="meme--image" />
+      <div className="meme">
+        <img src={meme.randomImage} className="meme--image" />
+        <h2 className="meme--text top">{meme.topText}</h2>
+        <h2 className="meme--text bottom">{meme.bottomText}</h2>
+      </div>
     </main>
   );
 }
