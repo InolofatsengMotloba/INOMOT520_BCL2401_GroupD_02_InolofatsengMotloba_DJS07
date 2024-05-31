@@ -1,22 +1,28 @@
 import React from "react";
 
+// Define a functional component named Meme
 export default function Meme() {
+  // Declare state variables for the meme object and all memes array
   const [meme, setMeme] = React.useState({
     topText: "",
     bottomText: "",
-    randomImage: "http://i.imgflip.com/1bij.jpg",
+    randomImage: "http://i.imgflip.com/1bij.jpg", // Initial random image URL
   });
   const [allMemes, setAllMemes] = React.useState([]);
 
+  // useEffect to fetch memes from the API when the component mounts
   React.useEffect(() => {
     async function getMemes() {
+      // Fetch memes data from the API
       const res = await fetch("https://api.imgflip.com/get_memes");
       const data = await res.json();
+      // Update the state with the fetched memes
       setAllMemes(data.data.memes);
     }
     getMemes();
   }, []);
 
+  // Function to get a random meme image from the fetched memes
   function getMemeImage() {
     const randomNumber = Math.floor(Math.random() * allMemes.length);
     const url = allMemes[randomNumber].url;
@@ -26,6 +32,7 @@ export default function Meme() {
     }));
   }
 
+  // Function to handle input changes for top and bottom text
   function handleChange(event) {
     const { name, value } = event.target;
     setMeme((prevMeme) => ({
